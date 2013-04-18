@@ -1,6 +1,6 @@
 # yoloswag420
 
-This is the repository for the official compiler for the yoloswag420 programming language, called cmplr.
+This is the repository for the official compiler for the [yoloswag420] programming language, called cmplr.
 
 ## Repository Structure
 
@@ -22,7 +22,7 @@ This is the repository for the official compiler for the yoloswag420 programming
 
 TODO
 
-## Manual/Tutorials
-Tutorials for the language are on the [wiki] (or at least will be).
+## Tutorials
+Tutorials for the language are on the [wiki], well they will  be.
 
 [wiki]: https://github.com/miguelishawt/yoloswag/wiki
