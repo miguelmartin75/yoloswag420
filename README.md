@@ -1,6 +1,6 @@
 # yoloswag420
 
-This is the repository for the official compiler for the [yoloswag420] programming language, called cmplr.
+This is the repository for the programming language yoloswag420. It contains example programs written in yoloswag420 and cmplr, the official compiler.
 
 ## Repository Structure
 
