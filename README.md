@@ -13,7 +13,7 @@ The programming language with so much #swag it eats #yolo for breakfast.
 		prnt "yoloswag420 is da best prog lang 5eva" plz
 		prnt "YO azz sed " + swag plz
 		
-		ttyl lokjks
+		ttyl lokjks plz
 	#420
 
 ## Author
