@@ -2,6 +2,20 @@
 
 The programming language with so much #swag it eats #yolo for breakfast.
 
+## What it looks like
+
+	<3 'yolo' is equivalent to 'main' in C-like languages
+	#swag yolo
+		
+		txt swag = stdin plz
+		
+		<3 printing to the screen is built into the language
+		prnt "yoloswag420 is da best prog lang 5eva" plz
+		prnt "YO azz sed " + swag plz
+		
+		ttyl lokjks
+	#420
+
 ## Author
 
 - Miguel Martin - [miguel.martin.7.5@hotmail.com](mailto:miguel.martin7.5@hotmail.com)
@@ -34,22 +48,7 @@ TODO
 	/license.txt
 		The license of all the code within the repository
 
-
-## What it looks like
-
-	<3 'yolo' is equivalent to 'main' in C-like languages
-	#swag yolo
-		
-		txt swag = stdin plz
-		
-		<3 printing to the screen is built into the language
-		prnt "yoloswag420 is da best prog lang 5eva" plz
-		prnt "YO azz sed " + swag plz
-		
-		ttyl lokjks
-	#420
-
-## Details
-The syntax and other nasty details about the language can be viewed on the [wiki].
+## Manual/Tutorials
+The manual and tutorials for the language are on the [wiki].
 
 [wiki]: https://github.com/miguelishawt/yoloswag/wiki
