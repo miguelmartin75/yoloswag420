@@ -7,8 +7,8 @@ This is the repository for the programming language yoloswag420. It contains exa
 	/cmplr
 		The cmplr directory with all the code for cmplr, 
 		which is the official compiler of the yoloswag420 language
-	/examples
-		Example programs written in yoloswag420
+	/sample
+		Sample programs written in yoloswag420
 	/LICENSE.txt
 		The license of all the code within the repository
 	/README.md
@@ -23,6 +23,6 @@ This is the repository for the programming language yoloswag420. It contains exa
 TODO
 
 ## Tutorials
-Tutorials for the language are on the [wiki], well they will  be.
+Tutorials for the language are on the [wiki]; well they will  be.
 
 [wiki]: https://github.com/miguelishawt/yoloswag/wiki
