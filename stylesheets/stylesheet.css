@@ -30,12 +30,6 @@ footer, header, hgroup, menu, nav, section
 	display: block;
 }
 
-#container 
-{
-	padding-top: 20px;
-	padding-bottom: 25px;
-}
-
 body 
 {
 	font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -88,14 +82,44 @@ a:hover
 	margin: 0 auto;
 }
 
-#container .inner img {
-  max-width: 100%;
+#container 
+{
+	width: 960px;
+	margin: 0 auto;
+	padding-top: 20px;
+	padding-bottom: 25px;
 }
+
+#content
+{
+	overflow: auto;
+}
+
+	#content .sidebar
+	{
+		width: 180px;
+		float: left;
+		padding: 0 0 0 0;
+	}
+		#content .sidebar #header
+		{
+			font-weight:bold;
+			color: black;
+			font-size: 16px;
+		}
+		#content .sidebar li
+		{
+			list-style: none;
+			font-size: 14px;
+			color: #666;
+			line-height: 24px;
+		}
 
 /* COMMON STYLES */
 
 code, pre
 {
+	float:left;
 	padding:0 3px 2px;
 	font-family:Monaco, Andale Mono, Courier New, monospace;
 	font-size:12px;
@@ -108,9 +132,9 @@ code, pre
 
 code
 {
-	//background-color:#fee9cc;
-	color:rgba(0, 0, 0, 0.75);
-	padding:1px 3px;
+	color: black;
+	opacity: 0.75;
+	padding: 1px 3px;
 }
 
 pre
@@ -132,11 +156,12 @@ pre
 
 
 
-hr {
-  height: 1px;
-  line-height: 100px;
-  margin-top: 1em;
-  padding-bottom: 1em;
+hr 
+{
+	height: 1px;
+	line-height: 100px;
+	margin-top: 1em;
+	padding-bottom: 1em;
 	border: none;
 }
 
@@ -162,36 +187,40 @@ table
 	border: 1px solid #ebebeb;
 }
 
-th {
-  font-weight: 500;
+th 
+{
+	font-weight: 500;
 }
 
-td {
-  border: 1px solid #ebebeb;
-  text-align: center; 
-  font-weight: 300;
+td 
+{
+	border: 1px solid #ebebeb;
+	text-align: center;
+	font-weight: 300;
 }
 
-form {
-  background: #f2f2f2;
-  padding: 20px;
-  
+form 
+{
+	background: #f2f2f2;
+	padding: 20px;
 }
 
 
 /* GENERAL ELEMENT TYPE STYLES */
 
-h1 {
-  font-size: 32px;  	
-  font-weight: bold;
-  padding-bottom: 15px;
+h1 
+{
+	font-size: 32px;
+	font-weight: bold;
+	padding-bottom: 15px;
 } 
 
-h2 {
-  font-size: 22px;
-  font-weight: bold;
-  color: #303030;
-  margin-bottom: 8px;
+h2 
+{
+	font-size: 22px;
+	font-weight: bold;
+	color: #303030;
+	margin-bottom: 8px;
 } 
 
 h3 {
@@ -252,9 +281,8 @@ dl dt
   color: #303030;
 }
 
-footer 
+#footer 
 {
-  background: transparent url('../images/hr.png') 0 0 no-repeat;
   margin-top: 40px;
   padding-top: 20px;
   padding-bottom: 30px;
@@ -262,17 +290,25 @@ footer
   color: #aaa;
 }
 
-footer a 
+#footer a
 {
   color: #666;
 }
-footer a:hover 
+
+#footer a:hover 
 {
   color: #444;
 }
 
+#note
+{
+	float: right;
+	font-size: 17px;
+}
+
 /* MISC */
-.clearfix:after {
+.clearfix:after 
+{
   clear: both;
   content: '.';
   display: block;
