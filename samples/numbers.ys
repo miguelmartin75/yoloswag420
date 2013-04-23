@@ -1,0 +1,28 @@
+#yoloswag
+
+    # x = 3 plz
+    # y = 4.5 plz
+
+    <3 TODO: Support number/string addition
+ 
+    <3 Addition
+    prnt "x + y = " plz
+    prnt (x + y) plz
+    prnt "\n" plz
+
+    <3 Subtraction
+    prnt "x - y = " plz
+    prnt (x - y) plz
+    prnt "\n" plz
+
+    <3 Multiplication
+    prnt "x * y = " plz
+    prnt (x * y) plz
+    prnt "\n" plz
+
+    <3 Division
+    prnt "x / y = " plz
+    prnt (x / y) plz
+    prnt "\n" plz
+
+#420

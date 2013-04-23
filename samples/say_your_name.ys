@@ -1,0 +1,12 @@
+#yoloswag
+
+    <3 Greet the user
+    prnt "Hello, what is your name?\n" plz
+
+    <3 Get the user's name
+    txt name = inpt plz
+
+    <3 Say goodbye to the user; using his name
+    prnt "Goodbye, " + name + " I have to go :(!" plz 
+
+#420
