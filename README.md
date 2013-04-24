@@ -4,9 +4,9 @@ This is the repository for the programming language yoloswag420. It contains exa
 
 ## Repository Structure
 
-	/cmplr
-		The cmplr directory with all the code for cmplr, 
-		which is the official compiler of the yoloswag420 language
+	/intrptr
+		The intrptr directory with all the code for intrptr, 
+		which is the official interpreter for the yoloswag420 language
 	/sample
 		Sample programs written in yoloswag420
 	/LICENSE.txt
