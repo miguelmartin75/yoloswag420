@@ -1,29 +1,30 @@
-# yoloswag420 reference manual
-
 - [1 Introduction](#1)
-	- 1.1 Disclaimeer
-- 2 Source Files
-	- 2.1 Standard Extenision
-- 3 Syntax
-	- 3.1 Structure of a Program
-	- 3.2 Whitespace
-	- 3.3 Tokens
-		- 3.3.1 Keywords
-		- 3.3.2 Literals
-		- 3.3.3 Symbols
-	- 3.3 Comments
-		- 3.1.1 Single-line comments
-		- 3.1.2 Multi-line comments
-	- 3.4 Variables
-		- 3.4.1 Generalized Syntax
-		- 3.4.2 Types
-	- 3.5 In-built Commands
-		- 3.5.1 Output Commands
-		- 3.5.2 Input Commands
+	- [1.1 Disclaimeer](#1.1)
+- [2 Source Files](#2)
+	- [2.1 Standard Extenision](#2.1)
+- [3 Syntax](#3)
+	- [3.1 Structure of a Program](#3.1)
+	- [3.2 Whitespace](#3.2)
+	- [3.3 Tokens](#3.3)
+		- [3.3.1 Keywords](#3.3.1)
+		- [3.3.2 Literals](#3.3.2)
+		- [3.3.3 Symbols](#3.3.3)
+	- [3.4 Comments](#3.4)
+		- [3.4.1 Single-line Comments](#3.4.1)
+		- [3.4.2 Multi-line Comments](#3.4.2)
+	- [3.5 Variables](#3.5)
+		- [3.5.1 Generalized Syntax](#3.5.1)
+		- [3.5.2 Types](#3.5.2)
+	- [3.6 In-built Commands](#3.6)
+		- [3.6.1 Output Commands](#3.6.1)
+		- [3.6.2 Input Commands](#3.6.2)
+- [4 Design Decisions](#4)
+	- [4.1 Design History](#4.1)
+	- [4.2 Reasons for Design](#4.2)
+	- [4.3 Differences to Other Languages](#4.3)
 
+# <a href="#1" id="1">1 Introduction</a>
 
-
-# [1 Introduction](#1)
 This document is the official reference manual for the yoloswag420 programming language. It contains:
 
 1. General structure of a yoloswag420 program
@@ -31,7 +32,9 @@ This document is the official reference manual for the yoloswag420 programming l
 3. Avaliable commands of the language
 4. Tips and hints
 
-## [1.1 Disclaimer](#1.1)
+## 1.1 Disclaimer
+
+
 yoloswag420 is currently being developed, so things may drastrically change in future versions. Please be aware of this, so the site may not have updated information at the time you are reading this. However, I will try my best to keep this page updated, if any changes/additions occur.
 
 # 2 Source Files
