@@ -2,6 +2,14 @@
 
 This is the repository for the programming language yoloswag420. It contains example programs written in yoloswag420 and cmplr, the official compiler.
 
+## Author
+
+- Miguel Martin - [miguel.martin.7.5@hotmail.com](mailto:miguel.martin7.5@hotmail.com)
+
+## License
+
+Please see LICENSE.txt
+
 ## Repository Structure
 
 	/intrptr
@@ -13,10 +21,6 @@ This is the repository for the programming language yoloswag420. It contains exa
 		The license of all the code within the repository
 	/README.md
 		A README file, which you're currently reading.
-
-## Author
-
-- Miguel Martin - [miguel.martin.7.5@hotmail.com](mailto:miguel.martin7.5@hotmail.com)
 
 ## Installation
 
