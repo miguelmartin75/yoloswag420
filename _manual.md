@@ -33,24 +33,15 @@
 
 # <a href="#1" id="1">1 Introduction</a>
 
-This document is the official reference manual for the yoloswag420 programming language. It contains:
+This document is the official reference manual for the yoloswag420 programming language. 
+It is assumed you have prior knowledge in programming. This document contains:
 
 1. General structure of a yoloswag420 program
 2. Syntax of the language
 3. Available commands of the language
-3. Tips and hints
+4. Tips and hints
 
-It is assumed you have prior knowledge in programming. 
-
-The following languages are compared to this language in order to get a deeper understanding:
-
-- C
-- C++
-- C#
-- Java
-
-If you know either of these languages, learning this language will not be hard at all, despite it being a *very* simple language. 
-
+---
 ## <a href="#1.1" id="1.1">1.1 Disclaimer</a>
 
 yoloswag420 is currently being developed, so things may drastically change during the development stage. Please be aware of this, so the site may not have updated information at the time you are reading this. However, I will try my best to keep this page updated, if any changes/additions occur.
