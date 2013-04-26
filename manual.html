@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset='utf-8'>
@@ -23,13 +24,440 @@
 
             <div id="content">
                 <div id="main">
-                    
+<ul>
+<li><a href="#1">1 Introduction</a>
+
+<ul>
+<li><a href="#1.1">1.1 Disclaimer</a></li>
+</ul>
+</li>
+<li><a href="#2">2 Source Files</a>
+
+<ul>
+<li><a href="#2.1">2.1 Standard Extension</a></li>
+</ul>
+</li>
+<li><a href="#3">3 Syntax</a>
+
+<ul>
+<li><a href="#3.1">3.1 Structure of a Program</a></li>
+<li><a href="#3.2">3.2 Statements</a></li>
+<li><a href="#3.3">3.3 Whitespace</a></li>
+<li><a href="#3.4">3.4 Comments</a>
+
+<ul>
+<li><a href="#3.4.1">3.4.1 Single-line Comments</a></li>
+<li><a href="#3.4.2">3.4.2 Multi-line Comments</a></li>
+</ul>
+</li>
+<li><a href="#3.5">3.5 Variables</a>
+
+<ul>
+<li><a href="#3.5.1">3.5.1 Generalised Syntax</a></li>
+<li><a href="#3.5.2">3.5.2 Types</a>
+
+<ul>
+<li><a href="#3.5.2.1">3.5.2.1 txt</a></li>
+<li><a href="#3.5.2.2">3.5.2.2 #</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#3.6">3.6 Tokens</a>
+
+<ul>
+<li><a href="#3.6.1">3.6.1 Keywords</a></li>
+<li><a href="#3.6.2">3.6.2 Literals</a>
+
+<ul>
+<li><a href="#3.6.2.1">3.6.2.1 String Literals</a></li>
+<li><a href="#3.6.2.2">3.6.2.2 Number Literals</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#3.7">3.7 In-built Commands</a>
+
+<ul>
+<li><a href="#3.7.1">3.7.1 prnt</a></li>
+<li><a href="#3.7.2">3.7.2 inpt</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#4">4 Design Decisions</a>
+
+<ul>
+<li><a href="#4.1">4.1 Design History</a>
+
+<ul>
+<li><a href="#4.1.1">4.1.1 V0.1</a></li>
+<li><a href="#4.1.2">4.1.2 V0.2</a></li>
+</ul>
+</li>
+<li><a href="#4.2">4.2 Reasons for Design</a></li>
+</ul>
+</li>
+<li><a href="#5">5 Feature TODO List</a></li>
+</ul>
 
 
+<hr />
+
+<h1><a href="#1" id="1">1 Introduction</a></h1>
+
+<p>This document is the official reference manual for the yoloswag420 programming language. It contains:</p>
+
+<ol>
+<li>General structure of a yoloswag420 program</li>
+<li>Syntax of the language</li>
+<li>Available commands of the language</li>
+<li>Tips and hints</li>
+</ol>
 
 
+<p>It is assumed you have prior knowledge in programming.</p>
+
+<p>The following languages are compared to this language in order to get a deeper understanding:</p>
+
+<ul>
+<li>C</li>
+<li>C++</li>
+<li>C#</li>
+<li>Java</li>
+</ul>
 
 
+<p>If you know either of these languages, learning this language will not be hard at all, despite it being a <em>very</em> simple language.</p>
+
+<h2><a href="#1.1" id="1.1">1.1 Disclaimer</a></h2>
+
+<p>yoloswag420 is currently being developed, so things may drastically change during the development stage. Please be aware of this, so the site may not have updated information at the time you are reading this. However, I will try my best to keep this page updated, if any changes/additions occur.</p>
+
+<h1><a href="#2" id="2">2 Source Files</a></h1>
+
+<p>This section discusses source file standards for the yoloswag420 language.</p>
+
+<h2><a href="#2.1" id="2.1">2.1 Standard Extension</a></h2>
+
+<p>The standard extension for the yoloswag420 language is <code>*.ys</code>. The official interpreter doesn't care what extension you use, however it is suggested you use the extension so you (and other people) can recognise it is yoloswag420 code.</p>
+
+<h1><a href="#3" id="3">3 Syntax</a></h1>
+
+<p>This section describes the syntax of the language, including how to structure a program and possbily some hints and tips.</p>
+
+<h2><a href="#3.1" id="3.1">3.1 Structure of a Program</a></h2>
+
+<p>This section describes the structure of a program.</p>
+
+<p>A typical program written in yoloswag420 has the following structure:</p>
+
+<pre><code>#yoloswag
+
+#420
+</code></pre>
+
+<p>Where the keywords <code>#yoloswag</code> resembles the beginning of the program and <code>#420</code> resembles the end of the program. Anything in-between those two keywords describe the program itself.</p>
+
+<p>Here is the equavilent code in other languages:</p>
+
+<h3>C and C++</h3>
+
+<pre><code>int main(int argc, char* argv[]) 
+{
+    return 0;
+}
+</code></pre>
+
+<h3>Java</h3>
+
+<pre><code>class Program
+{
+    static void main(String[] args)
+    {
+    }
+}
+</code></pre>
+
+<h3>C</h3>
+
+<pre><code>class Program
+{
+    static void Main(string[] args)
+    {
+    }
+}
+</code></pre>
+
+<h2><a href="#3.2" id="3.2">3.2 Statements</a></h2>
+
+<p>A statement has the following syntax:</p>
+
+<pre><code>&lt;statement&gt; plz
+</code></pre>
+
+<p>Where <code>plz</code> is required, as it is the keyword to describe that it is the end of the statement. And, where <code>&lt;statement&gt;</code> is a valid statement of the program. What you can write in the statement is dicussed further down.</p>
+
+<h2><a href="#3.3" id="3.3">3.3 Whitespace</a></h2>
+
+<p>The yoloswag420 program is whitespace insensitive, like most languages. This means that, the following code:</p>
+
+<pre><code>#yoloswag
+
+#420
+</code></pre>
+
+<p>Is equivalent to:</p>
+
+<pre><code>#yoloswag#420
+</code></pre>
+
+<h2><a href="#3.4" id="3.4">3.4 Comments</a></h2>
+
+<p>Comments are notes for the programmer to read whilst reading code</p>
+
+<p>There are only single line comments (so far). Multi-line comments may be added in the future.</p>
+
+<h3><a href="#3.4.1" id="3.4.1">3.4.1 Single-line Comments</a></h3>
+
+<p><code>&lt;3</code> starts a single line comment.</p>
+
+<h4>EXAMPLE</h4>
+
+<pre><code>&lt;3 This is a single line comment #swag
+</code></pre>
+
+<h2><a href="#3.4.2" id="3.4.2">3.4.1 Multi-line comments</a></h2>
+
+<p>Multi-line comments are not currently not supported.</p>
+
+<h2><a href="#3.5" id="3.5">3.5 Variables</a></h2>
+
+<p>Variables are declared by their type explicitly, as yoloswag420 is statically typed. I may add dynamic typed variables in the future, but as for now, there is none.</p>
+
+<h3><a href="#3.5.1" id="3.5.1"> 3.5.1 Generalised Syntax</a></h3>
+
+<p>The syntax for declaring a variable is as follows:</p>
+
+<pre><code>&lt;type&gt; &lt;name&gt; [= value] plz
+</code></pre>
+
+<p>Where <code>&lt;type&gt;</code> is the type of your variable, and where <code>&lt;name&gt;</code> is the name of your variable. And where <code>[= value]</code> is an optional value you may assign your variable to.</p>
+
+<h3><a href="#3.5.2" id="3.5.2">3.5.2 Types</a></h3>
+
+<p>As of currently, there are no way to define your own type of variables (i.e. no classes).</p>
+
+<h3><a href="#3.5.2.1" id="3.5.2.1">3.5.2.1 txt</a></h3>
+
+<p><code>txt</code> resembles a string of text.</p>
+
+<h4>For Example</h4>
+
+<pre><code>txt example = "This is an example" plz
+</code></pre>
+
+<h3><a href="#3.5.2.2" id="3.5.2.2">3.5.2.2 #</a></h3>
+
+<p><code>#</code> represents a decimal number. It is implemented as a double floating point in C++, which is 64 bits on most systems.</p>
+
+<h4>For Example</h4>
+
+<pre><code># example = 42.5 plz
+</code></pre>
+
+<h1><a href="#3.6" id="3.6">3.6 Tokens</a></h1>
+
+<p>This section discusses the tokens of the language. A token is a single element in the source code of a programming language, which describes the syntax of it.</p>
+
+<p>Read more about tokens on <a href="https://en.wikipedia.org/wiki/Lexical_analysis#Token">Wikipedia</a>.</p>
+
+<h4>For Example:</h4>
+
+<pre><code>#yoloswag
+
+#420
+</code></pre>
+
+<p>Where <code>#yoloswag</code> and <code>#420</code> are keyword tokens.</p>
+
+<h2><a href="#3.6.1" id="3.6.1">3.6.1 Keywords</a></h2>
+
+<p>Here is a list of all reserved keywords and their equivalent meaning in other programming languages:</p>
+
+<table>
+<thead>
+<tr>
+<th> Keyword </th>
+<th> C                       </th>
+<th> C++                 </th>
+<th> C#              </th>
+<th> Java</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> <code>#yoloswag</code>* </td>
+<td> N/A </td>
+<td> N/A </td>
+<td> N/A </td>
+<td> N/A</td>
+</tr>
+<tr>
+<td> <code>#end</code>* </td>
+<td> N/A </td>
+<td> N/A </td>
+<td> N/A </td>
+<td> N/A</td>
+</tr>
+<tr>
+<td> <code>txt</code>  </td>
+<td> <code>char*</code> </td>
+<td> <code>std::string</code>      </td>
+<td> <code>string</code>      </td>
+<td> <code>String</code></td>
+</tr>
+<tr>
+<td> <code>#</code> </td>
+<td> <code>double</code> </td>
+<td> <code>double</code> </td>
+<td> <code>double</code> </td>
+<td> <code>double</code></td>
+</tr>
+<tr>
+<td> <code>prnt</code> </td>
+<td> <code>printf()</code> </td>
+<td> <code>std::cout</code> </td>
+<td> <code>Console.Write()</code> </td>
+<td> <code>System.out.print()</code></td>
+</tr>
+<tr>
+<td> <code>inpt</code> </td>
+<td> <code>gets()</code> </td>
+<td> <code>std::cin</code> </td>
+<td> <code>Console.ReadLine()</code> </td>
+<td> <code>Scanner.next()</code></td>
+</tr>
+</tbody>
+</table>
+
+
+<p>*These keywords do have an alternative in other languages, however the direct meaning doesn't translate to another keyword.</p>
+
+<h2><a href="#3.6.2" id="3.6.2">3.6.2 Literals</a></h2>
+
+<p>Constants and literals are un-mutable, they are used to assign variables to values (see <a href="#3.5">section 3.5</a>).</p>
+
+<h3><a href="#3.6.2.1" id="3.6.2.1">3.6.2.1 String Literals</a></h3>
+
+<p>A string literal is described in-between enclosing double quotation marks. A string literal describes an un-mutable string. You may refer to a string literal as you would with a <code>txt</code> variable, but you may not change the value of a string literal.</p>
+
+<h4>i.e.</h4>
+
+<p>The following snippets of code are equivalent:</p>
+
+<pre><code>txt message = "Hello World" plz
+print message plz
+</code></pre>
+
+<p>and</p>
+
+<pre><code>prnt "Hello World" plz
+</code></pre>
+
+<p>The following code is illegal:</p>
+
+<pre><code>"Hello World" = "Cheese" plz
+</code></pre>
+
+<h3><a href="#3.6.2.2" id="3.6.2.2">3.6.2.2 Number Literals</a></h3>
+
+<p>A number literal (constant) is described as a decimal number, there are no prefixes or suffixes for number literals. You may refer to a number constant as you would with a <code>#</code> variable, but you may not change the value of a number literal.</p>
+
+<p>i.e.</p>
+
+<p>The following snippets of code are equivalent:</p>
+
+<pre><code># threePointFive = 3.5 plz
+print threePointFive plz
+</code></pre>
+
+<p>and</p>
+
+<pre><code>prnt 3.5 plz
+</code></pre>
+
+<p>The following code is illegal:</p>
+
+<pre><code>3.5 = 42 plz
+</code></pre>
+
+<h2><a href="#3.7" id="3.7">3.7 In-built Commands</a></h2>
+
+<p>This sections describes the in-built commands in yoloswag420.</p>
+
+<h3><a href="#3.7.1" id="3.7.1">3.7.1 prnt</a></h3>
+
+<p>The prnt command stands for "print".</p>
+
+<p>Here is the syntax of the usage:</p>
+
+<pre><code>prnt &lt;message&gt; plz
+</code></pre>
+
+<p>Where <message> is a <code>txt</code> or <code>#</code> variable or constant.</p>
+
+<h3><a href="#3.7.2" id="3.7.2">3.7.2 inpt</a></h3>
+
+<p>The inpt command stands for "input". This command simply gets user input from the console, and returns a <code>txt</code> variable.</p>
+
+<h1><a href="#4" id="4">4 Design Decisions</a></h1>
+
+<p>This section describes design decisions for the yoloswag420 language.</p>
+
+<h2><a href="#4.1" id="4.1">4.1 Design History</a></h2>
+
+<p>This section describes all previous designs of the yoloswag420 language.</p>
+
+<h3><a href="#4.1.1" id="4.1.1.">4.1.1 V0.1</a></h3>
+
+<p>The initial design for the yoloswag420 language had support for functions and slight differences in the syntax.</p>
+
+<p>Initially, the language looked some-what like this:</p>
+
+<pre><code>#swag yolo
+
+#420
+</code></pre>
+
+<p>Where <code>#swag</code> would define a function, and <code>yolo</code> was the name of the function, <code>#420</code> ended the function body. <code>yolo</code> was equivalent to <code>main</code> in C-like languages; the function that gets called on the start of the program.</p>
+
+<h3><a href="#4.1.2" id="4.1.2">4.1.2 V0.2</a></h3>
+
+<p>Version 0.2 is the current design that you see. The reason for the function removal was because it would take a lot more time to implement functions.</p>
+
+<h2><a href="#4.2" id="4.2">4.2 Reasons for Design</a></h2>
+
+<p>The programming language concept was made up for my research project, in year 12. The idea of the language came to me whilst I was trying to think of a programming language design that would be easy/fun to implement and wouldn't seem to take that long compared to traditonal programming languages.</p>
+
+<p>See above for feature specific reasons on design.</p>
+
+<h1><a href="#5" id="5">5 Feature TODO List</a></h1>
+
+<p>Here is a list of what I would like the language to have in the future, after a stable version of interpreter is implemented:</p>
+
+<ul>
+<li>Functions (a.k.a. user commands)</li>
+<li>More primitive types
+
+<ul>
+<li>integers</li>
+<li>booleans</li>
+<li>character type</li>
+</ul>
+</li>
+<li>File I/O</li>
+</ul>
 
                 </div>
             </div>
