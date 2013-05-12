@@ -26,21 +26,74 @@
 ///    all copies or substantial portions of the Software.
 ///
 
+#include <iostream>
+#include <string>
+
 #include "lexer.hpp"
 #include "parser.hpp"
+#include "ErrorCodes.hpp"
 
+// extern functions/vars (yuck, I know)
+extern "C" {
+	FILE *yyin;
+	FILE *yyout;
+	int yyparse(void);
+}
+
+// Functions
+
+int parse(const std::string& filepath);
 void printUsage();
+
 int main(int argc, char* argv[])
 {
+	// check usage of the program
 	if(argc == 1)
 	{
 		std::cerr << "[ERROR]: No input file\n";
 		printUsage();
+		return ErrorCodes::USAGE_ERROR;
+	}
+	
+	// holds temporary errors
+	int errorCode = ErrorCodes::SUCCESS;
+	
+	// Step 1: Parse and Lex (this is a combined step)
+	
+	errorCode = parse(argv[1]);
+	if(errorCode) // this is gross, I know
+	{
+		return errorCode;
 	}
 	
 	
+	return errorCode;
+}
+
+int parse(const std::string& filepath)
+{
+	// Open the file we wish to interpet
+	FILE* file = fopen(filepath.c_str(), "r"); // have to use FILE for bison/flex
 	
-	return 0;
+	// if we failed to open the file
+	if(!file)
+	{
+		std::cerr << "[ERROR]: Failed to open file: \"" << filepath << "\"\n";
+		std::cerr << "Perhaps there is no persmission or file does not exist?\n";
+		return ErrorCodes::FAILED_TO_OPEN_FILE;
+	}
+	
+	// set flex to read from the file instead of stdin
+	yyin = file;
+	
+	// parse through the file
+	while(!feof(yyin))
+	{
+		// get yacc (bison in this case) to parse the file
+		yyparse();
+	}
+	
+	return ErrorCodes::SUCCESS;
 }
 
 void printUsage()
