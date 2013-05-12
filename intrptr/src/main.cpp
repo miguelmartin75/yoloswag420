@@ -26,10 +26,25 @@
 ///    all copies or substantial portions of the Software.
 ///
 
-#include "Scanner.hpp"
-#include "Parser.hpp"
+#include "lexer.hpp"
+#include "parser.hpp"
 
+void printUsage();
 int main(int argc, char* argv[])
 {
-    // TODO
+	if(argc == 1)
+	{
+		std::cerr << "[ERROR]: No input file\n";
+		printUsage();
+	}
+	
+	
+	
+	return 0;
+}
+
+void printUsage()
+{
+	std::cout << "intrptr <input-file>\n";
+	std::cout << "\tWhere <input-file> is the source code of your yoloswag420 application\n";
 }

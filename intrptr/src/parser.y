@@ -1,4 +1,5 @@
 %{
+#include <iostream>
 #include <string>
 %}
 
@@ -11,18 +12,20 @@
 /***************
  * Preferences *
  ***************/
-%defines "Parser.hpp"
-%output "Parser.cpp"
+%defines "parser.hpp"
+%output "parser.cpp"
 
 %union {
     double numberValue;
     std::string stringValue;
-
 }
 
 /********************
 * Token Definitions *
 *********************/
+
+%token TOKEN_BEGIN_PROGRAM;
+%token TOKEN_END_PROGRAM;
 
 /* Variable Types */
 %token TOKEN_STRING_VAR
@@ -51,5 +54,18 @@
 * RULES *
 *********/
 %%
+program : TOKEN_BEGIN_PROGRAM statements TOKEN_END_PROGRAM;
 
+statements : statement TOKEN_END_OF_STATEMENT | TOKEN_END_OF_STATEMENT;
+
+statement : variable_declaration | expression | command;
+
+variable_declaration : TOKEN_STRING_VAR TOKEN_IDENTIFIER { std::cout << "Variable declared!\n"; } |
+                        TOKEN_NUMBER_VAR TOKEN_IDENTIFIER { std::cout << "# made\n"; };
+
+expression : var;
+
+command : TOKEN_PRINT expression | TOKEN_INPUT var;
+
+var : TOKEN_IDENTIFIER { std::cout << "reference to a variable made\n"; };
 %%
