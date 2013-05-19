@@ -179,7 +179,7 @@ Here is a list of all reserved keywords and their equivalent meaning in other pr
 | Keyword | C 						| C++                 | C#              | Java
 |--------|----------------------|---------------------|----------------|----
 | `#yoloswag`* | N/A | N/A | N/A | N/A
-| `#end`* | N/A | N/A | N/A | N/A
+| `#420`* | N/A | N/A | N/A | N/A
 | `txt`  | `char*` | `std::string`      | `string`      | `String` 
 | `#` | `double` | `double` | `double` | `double`
 | `prnt` | `printf()` | `std::cout` | `Console.Write()` | `System.out.print()`

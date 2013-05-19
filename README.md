@@ -1,5 +1,5 @@
 # yoloswag420 website
-This is the repository for the yoloswag420 programming language website. It is hosted [here]. If you would like to make any contributions, please fork this branch, but please try to keep to my coding/graphics design style.
+This is the repository for the yoloswag420 programming language website. It is hosted [here](http://miguelishawt.github.io/yoloswag420/). If you would like to make any contributions, please fork this branch, but please try to keep to my coding/graphics design style.
 
 The website contains:
 
