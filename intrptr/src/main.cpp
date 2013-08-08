@@ -1,5 +1,5 @@
 ///
-/// cmplr
+/// intrptr
 /// Copyright (C) 2013 Miguel Martin. All rights reserved.
 ///
 ///
@@ -31,6 +31,7 @@
 
 #include "lexer.hpp"
 #include "parser.hpp"
+#include "Interpreter.hpp"
 #include "ErrorCodes.hpp"
 
 // Functions
@@ -49,15 +50,16 @@ int main(int argc, char* argv[])
 	// holds temporary errors
 	int errorCode = ErrorCodes::SUCCESS;
 	
-	Interpreter interpreter;
-	StatementList statements = parse(argv[1], interpreter, &errorCode);
+	
+	// holds the statements we will parse
+	StatementList statements = parse(argv[1], &errorCode);
 	if(errorCode) // this is gross, I know
 	{
 		return errorCode;
 	}
 	
-	// interpret the statements
-	errorCode = interpreter.interpret(statements);
+	Interpreter interpreter; // create an interpreter
+	errorCode = interpreter.interpret(statements); // interpret the statements
 	
 	return errorCode;
 }
