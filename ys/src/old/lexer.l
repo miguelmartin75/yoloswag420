@@ -29,7 +29,7 @@
 %{
 
 #include <iostream>
-#include "string_utils.hpp" // mainly for to_string
+#include <util/string_utils.hpp> // mainly for to_string
 #include "parser.hpp" // The parser; generated from yacc (bison)
 
 int yyerror(const char* message);
@@ -76,7 +76,7 @@ NUMBER_VAR "#"
 {BEGIN_PROGRAM} { return TOKEN_BEGIN_PROGRAM; }
 {END_PROGRAM} { return TOKEN_END_PROGRAM; }
 {STRING_LITERAL} { yylval.stringValue = yytext; return TOKEN_STRING_LITERAL; }
-{DIGIT}\.{DIGIT} { from_string(yytext, yylval.numberValue); return TOKEN_NUMBER_CONSTANT; }
+{DIGIT}\.{DIGIT} { util::from_string<std::string>(yytext, yylval.numberValue); return TOKEN_NUMBER_CONSTANT; }
 {ALPHA}*{DIGIT} { return TOKEN_IDENTIFIER; }
 
 {LEFT_PARAN} { return TOKEN_LEFT_PARAN; }
