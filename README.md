@@ -4,19 +4,19 @@ This is the repository for the programming language yoloswag420.
 
 # Repository Structure
 
-
-- [`src`](src)
-	- Contains the source code for the official interpreter/compiler
+<pre>
+[src](src)
+	Contains the source code for the official interpreter/compiler
 	for the yoloswag420 language
-- [`sample`](sample)
-	- Sample programs written in yoloswag420
-- [`LICENSE.txt`](LICENSE.txt)
-	- The license of all the code within the repository
-- [`README.md`](README.md)
-	- A README file, which you're currently reading.
-- [`run_samples.sh`](run_samples.sh)
-	- A script to run all the samples
-
+[sample](sample)
+	Sample programs written in yoloswag420
+[LICENSE.txt](LICENSE.txt)
+	The license of all the code within the repository
+[README.md](README.md)
+	A README file, which you're currently reading.
+[run_samples.sh](run_samples.sh)
+	A script to run all the samples
+</pre>
 
 # Installation
 
