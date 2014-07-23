@@ -4,27 +4,31 @@ This is the repository for the programming language yoloswag420.
 
 # Repository Structure
 
-<pre>
-[src](src)
+- [src](src)
 	Contains the source code for the official interpreter/compiler
 	for the yoloswag420 language
-[sample](sample)
+- [sample](sample)
 	Sample programs written in yoloswag420
-[LICENSE.txt](LICENSE.txt)
+- [LICENSE.txt](LICENSE.txt)
 	The license of all the code within the repository
-[README.md](README.md)
+- [README.md](README.md)
 	A README file, which you're currently reading.
-[run_samples.sh](run_samples.sh)
+- [run_samples.sh](run_samples.sh)
 	A script to run all the samples
-</pre>
 
-# Installation
+# Compiling
+
+Simply use `make` to create the executable `ys420i`.
+
+> **NOTE:**
+> 
+> I will later be changing the build system to use CMake.
 
 # Usage
 
 1. Install it first
 2. [Write code](http://miguelishawt.github.io/yoloswag420/manual.html)
-3. Interpret the code (`yoloswag420-i <file>`)
+3. Interpret the code (`ys420i <file>`)
 
 # License
 
