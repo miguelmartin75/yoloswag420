@@ -3,13 +3,17 @@
 
 #include "Value.hpp"
 
+class Interpreter;
+
 namespace ast
 {
     /// \brief The base node class for the AST
     struct Node
     {
+        virtual ~Node() { }
+
         /// Evaluates the node
-        virtual Value eval() = 0;
+        virtual Value eval(Interpreter&) = 0;
     };
 }
 

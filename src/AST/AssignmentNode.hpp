@@ -2,18 +2,22 @@
 #define ASSIGNMENTNODE_HPP
 
 #include "Node.hpp"
+#include "VariableNode.hpp"
 
 namespace ast
 {
     struct AssignmentNode : Node
     {
-        Node& lhs;
-        Node& rhs;
+        AssignmentNode(IdentifierNode& id, Node& node)
+            : assignee(id), rhs(node) { }
 
-        virtual Value eval() override
-        {
-            // todo
-        }
+        /// The assignee
+        IdentifierNode& assignee;
+
+        /// The expression to assign to
+        Node& rhs;
+        
+        virtual Value eval(Interpreter& interpreter) override
     }
 }
 

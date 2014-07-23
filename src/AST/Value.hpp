@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include <util/string_utils.hpp>
+
 namespace ast
 {
     /// \brief Defines a value type
@@ -30,6 +32,13 @@ namespace ast
         {
         }
 
+        Value(const Value& value)
+            : type(value.type),
+              number(value.number),
+              string(value.string)
+        {
+        }
+
         enum class Type
         {
             /// Represents that the Value doesn't contain
@@ -43,6 +52,18 @@ namespace ast
             STRING
         };
 
+        /// assigns the value
+        void assign(NumberType number)
+        {
+            m_number = number;
+            m_string = util::to_string(number);
+        }
+
+        void assign(const std::string& str)
+        {
+            m_number = util::from_string<NumberType>(number);
+            m_string = str;
+        }
 
         NumberType asNumber() const
         {
