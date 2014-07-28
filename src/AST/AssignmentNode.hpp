@@ -17,7 +17,7 @@ namespace ast
         /// The expression to assign to
         Node& rhs;
         
-        virtual Value eval(Interpreter& interpreter) override
+        virtual Value eval(Interpreter& interpreter) override;
     }
 }
 
