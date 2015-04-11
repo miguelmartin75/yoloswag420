@@ -1,36 +1,36 @@
 #ifndef INTERPRETER_HPP
 #define INTERPRETER_HPP
 
-#include <iostream>
 #include <unordered_map>
-#include <string>
 
 #include "ErrorCodes.hpp"
+#include "Types.hpp"
+#include "Logger.hpp"
+#include "StatementList.hpp"
+
 #include "AST/AST.hpp"
 
 class Interpreter
 {
 public:
 
-    typedef Value Variable;
+    using Variable = ast::Value;
+    using VariableMap = std::unordered_map<String, ast::Value>;
 
     Interpreter(std::ostream& logStream = std::cerr);
 
-    Variable& addVariable(const IdentifierNode& name);
-    Variable& removeVariable(const IdentifierNode& name);
-    Variable& getVariable(const IdentifierNode& name);
-
     /// Interprets a list of statements
+    /// \return 0 if success. 
     int interpret(const StatementList& statements);
 
-    void logError(const std::string& str);
-    std::ostream& logStream() const;
+    Logger& logger() { return m_logger; }
+    VariableMap& variables() { return m_variables; }
+    const VariableMap& variables() const { return m_variables; }
 
 private:
 
-    std::ostream& m_logStream;
-
-    std::unordered_map<std::string, Value> m_variables;
+    Logger m_logger;
+    VariableMap m_variables;
 };
 
 #endif // INTERPRETER_HPP
