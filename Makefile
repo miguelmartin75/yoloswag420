@@ -1,5 +1,5 @@
 CXX=
-CXX_ARGS=-std=c++11 -O3
+CXX_ARGS=-std=c++11 -g
 SRC_DIR=src
 
 make:
