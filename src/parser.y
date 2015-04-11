@@ -7,19 +7,17 @@
 #include "ErrorCodes.hpp"
 #include "Interpreter.hpp"
 
-// extern functions/vars (yuck, I know)
 extern "C" {
 	FILE *yyin;
 	FILE *yyout;
 	int yyparse(void);
 }
 
-StatementList statements;
-int parse(const std::string& filepath);
+StatementList parse(const std::string& filepath);
 
 %}
 
-%parse-param {StatementList& statements}
+%parse-param {Interpreter& interpreter} {StatementList& statements}
 
 /***************
  * Preferences *
@@ -40,8 +38,8 @@ int parse(const std::string& filepath);
 %token TOKEN_END_PROGRAM;
 
 /* Variable Types */
-%token TOKEN_STRING_VAR
-%token TOKEN_NUMBER_VAR
+%token TOKEN_STRING_TYPE
+%token TOKEN_NUMBER_TYPE
 
 /* Identifiers/constant expressions */
 %token TOKEN_IDENTIFIER
@@ -73,28 +71,26 @@ int parse(const std::string& filepath);
 program : TOKEN_BEGIN_PROGRAM statements TOKEN_END_PROGRAM;
 
 statements : statement TOKEN_END_OF_STATEMENT | TOKEN_END_OF_STATEMENT;
-
 statement : variable_declaration | command | expression;
 
 var : TOKEN_IDENTIFIER;
+constant : TOKEN_STRING_LITERAL | TOKEN_NUMBER_LITERAL;
+value : var | constant;
 
-variable_declaration : TOKEN_STRING_VAR TOKEN_IDENTIFIER { statements.emplace_back(new VariableNode(Value($2)));} |
+variable_declaration : TOKEN_IDENTIFIER { statements.emplace_back(new VariableNode(Value($2)));} |
                        TOKEN_NUMBER_VAR TOKEN_IDENTIFIER { statemnets.emplace_back(new VariableNode(Value(util::from_string($2)))); };
 
 command : TOKEN_PRINT expression { } | 
           TOKEN_INPUT var { statements.emplace_back(new PrintCommandNode($2)); };
 
+expression : var TOKEN_ASSIGNMENT expression { } |
+             expression TOKEN_PLUS expression { } |
+             expression TOKEN_MINUS expression { } |
+             expression TOKEN_MULTIPLY value { } |
+             value TOKEN_DIVIDE value { };
 %%
 
-/*
-expression : var TOKEN_ASSIGNMENT expression { } |
-             var TOKEN_PLUS var { } |
-             var TOKEN_MINUS var { } |
-             var TOKEN_MULTIPLY var { } |
-             var TOKEN_DIVIDE var { };
-             */
-
-int parse(const std::string& filepath)
+StatementList parse(const std::string& filepath, int* errorCode = nullptr)
 {
 	// Open the file we wish to interpet
 	FILE* file = fopen(filepath.c_str(), "r"); // have to use FILE for bison/flex
@@ -110,14 +106,19 @@ int parse(const std::string& filepath)
             return errorCode;
         }
 	}
+
 	
 	// set flex to read from the file instead of stdin
 	yyin = file;
+
+    StatementList statements;
 
 	// parse through the file
 	while(!feof(yyin))
 	{
 		// get yacc (bison in this case) to parse the file
-		yyparse();
+		yyparse(statements);
 	}
+
+    return statements;
 }

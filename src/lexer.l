@@ -18,24 +18,6 @@ LOWERCASE_ALPHA [a-z]+
 ALPHA [A-Za-z]+
 STRING_LITERAL "\".*\""
 WHITESPACE [ \t\r\n]*
-END_OF_STATEMENT "plz"
-BEGIN_PROGRAM "#yoloswag"
-END_PROGRAM "#420"
-
-/* Operators */
-LEFT_PARAN "("
-RIGHT_PARAN ")"
-PLUS "+"
-MINUS "-"
-MULTIPLY "*"
-DIVIDE "/"
-ASSIGNMENT "="
-
-/* Built-in Types/Commands */
-PRINT "prnt"
-INPUT "inpt"
-STRING_VAR "txt"
-NUMBER_VAR "#"
 
 
 /********************
@@ -43,31 +25,33 @@ NUMBER_VAR "#"
  ********************/
 %%
 
-{END_OF_STATEMENT} { return TOKEN_END_OF_STATEMENT; }
 {WHITESPACE} { /* ignore whitespace */ }
-{BEGIN_PROGRAM} { return TOKEN_BEGIN_PROGRAM; }
-{END_PROGRAM} { return TOKEN_END_PROGRAM; }
 {STRING_LITERAL} { yylval.stringValue = yytext; return TOKEN_STRING_LITERAL; }
 {DIGIT}\.{DIGIT} { util::from_string<std::string>(yytext, yylval.numberValue); return TOKEN_NUMBER_CONSTANT; }
 {ALPHA}*{DIGIT} { return TOKEN_IDENTIFIER; }
 
-{LEFT_PARAN} { return TOKEN_LEFT_PARAN; }
-{RIGHT_PARAN} { return TOKEN_RIGHT_PARAN; }
-{PLUS} { return TOKEN_PLUS; }
-{MINUS} { return TOKEN_MINUS; }
-{MULTIPLY} { return TOKEN_MULTIPLY; }
-{DIVIDE} { return TOKEN_DIVIDE; }
-{ASSIGNMENT} { return TOKEN_ASSIGNMENT; }
+"#yoloswag" { return TOKEN_BEGIN_PROGRAM; }
+"#420" { return TOKEN_END_PROGRAM; }
+"plz" { return TOKEN_END_OF_STATEMENT; }
 
-{PRINT} { return TOKEN_PRINT; }
-{INPUT} { return TOKEN_INPUT; }
-{STRING_VAR} { return TOKEN_STRING_VAR; }
-{NUMBER_VAR} { return TOKEN_NUMBER_VAR; }
+"prnt" { return TOKEN_PRINT; }
+"inpt" { return TOKEN_INPUT; }
+"str" { return TOKEN_STRING_TYPE; }
+"#" { return TOKEN_NUMBER_TYPE; }
+
+"(" { return TOKEN_LEFT_PARAN; }
+")" { return TOKEN_RIGHT_PARAN; }
+"+" { return TOKEN_PLUS; }
+"-" { return TOKEN_MINUS; }
+"*" { return TOKEN_MULTIPLY; }
+"/" { return TOKEN_DIVIDE; }
+"=" { return TOKEN_ASSIGNMENT; }
 
 . { print_error("Unknown token: \'", yytext, "\'"); }
 
 %%
 
+// TODO: use logger
 template <typename T, typename... Args>
 void impl_continue_to_print_error(const T& obj, Args&&... args)
 {
