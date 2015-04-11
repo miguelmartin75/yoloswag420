@@ -23,9 +23,8 @@ int main(int argc, char* argv[])
 	// holds temporary errors
 	int errorCode = ErrorCodes::SUCCESS;
 	
-	
 	// holds the statements we will parse
-	//StatementList statements = parse(argv[1], &errorCode);
+	auto statements = parse(argv[1], &errorCode);
 	if(errorCode) // this is gross, I know
 	{
 		return errorCode;
