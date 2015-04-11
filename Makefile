@@ -10,3 +10,4 @@ flex:
 	@(cd $(SRC_DIR) && flex lexer.l)
 clean:
 	rm -f ys420i
+	rm -f $(SRC_DIR)/{parser,lexer}.{hpp,cpp}
