@@ -16,7 +16,8 @@ namespace ast
         std::string id;
 
         virtual Value eval(Interpreter& interpreter) override;
-    };
+        virtual Type type() const override { return Node::Type::IDENTIFIER; }
+    }
 }
 
 #endif // IDENTIFIERNODE_HPP

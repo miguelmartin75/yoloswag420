@@ -9,7 +9,8 @@ namespace ast
     {
         enum Operator
         {
-            /*
+            ASSIGNMENT,
+
             // comparisions
             EQUALITY,
             NON_EQUALITY,
@@ -17,7 +18,6 @@ namespace ast
             GREATER_THAN,
             LESS_THAN_OR_EQUALS,
             GREATER_THAN_OR_EQUALS,
-            */
 
             // arithmetic
             PLUS,
@@ -25,29 +25,19 @@ namespace ast
             MULT,
             DIV,
 
-            /*
             // logical
             LOGICAL_OR,
             LOGIAL_AND,
-
-            // bitwise
-            BITWISE_OR,
-            BITWISE_AND,
-            BITWISE_XOR
-            */
         } 
         // the operator to use
         op;
 
-        Node& left;
-        Node& right;
+        NodePtr left;
+        NodePtr right;
 
-        BinaryOperator(Node& Left, Node& Right, Operator Op)
-            : left(Left), right(Right), op(Op)
-        {
-        }
-
+        BinaryOperator(Operator op, NodePtr left, NodePtr right);
         virtual Value eval(Interpreter&) override;
+        virtual Type type() const override { return Node::Type::BINARY_OP; }
     };
 }
 
