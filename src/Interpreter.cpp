@@ -9,7 +9,9 @@ int Interpreter::interpret(const StatementList& statements)
 {
     for(auto& statement : statements)
     {
-        statement.eval(*this);
+        // TODO: make eval return an error code along
+        // with a Value?
+        statement.eval(*this)
     }
 
 	return 0;
