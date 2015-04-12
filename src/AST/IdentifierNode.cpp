@@ -7,6 +7,6 @@ namespace ast
     Value IdentifierNode::eval(Interpreter& interpreter)
     {
         // just return the value at this id
-        return interpreter.getVariable(*this);
+        return Void{};
     }
 }

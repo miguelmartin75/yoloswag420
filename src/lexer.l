@@ -4,12 +4,17 @@
 #include <util/string_utils.hpp> // mainly for to_string
 #include "parser.hpp" // The parser; generated from yacc (bison)
 
-int yyerror(const char* message);
+#include "AST/Types.hpp"
+
+int yyerror(ast::StatementList&, const char* message);
+inline int token(int token) { yylval.token = token; return token; }
 
 %}
 
 %option outfile="lexer.cpp"
 %option header-file="lexer.hpp"
+%option yylineno
+%option noyywrap
 
 /* Character Specifics */
 DIGIT [0-9]+
@@ -26,53 +31,30 @@ WHITESPACE [ \t\r\n]*
 %%
 
 {WHITESPACE} { /* ignore whitespace */ }
-{STRING_LITERAL} { yylval.stringValue = yytext; return TOKEN_STRING_LITERAL; }
-{DIGIT}\.{DIGIT} { util::from_string<std::string>(yytext, yylval.numberValue); return TOKEN_NUMBER_CONSTANT; }
-{ALPHA}*{DIGIT} { return TOKEN_IDENTIFIER; }
+{STRING_LITERAL} { yylval.string = yytext; return TOKEN_STRING_LITERAL; }
+{DIGIT}+\.{DIGIT} { yylval.number = util::from_string<Number>(String{yytext}); return TOKEN_NUMBER_CONSTANT; }
+{DIGIT}+ { yylval.number = util::from_string<Number>(String{yytext}); return TOKEN_NUMBER_CONSTANT; }
+{ALPHA}*{DIGIT} { return token(TOKEN_IDENTIFIER); }
 
-"#yoloswag" { return TOKEN_BEGIN_PROGRAM; }
-"#420" { return TOKEN_END_PROGRAM; }
-"plz" { return TOKEN_END_OF_STATEMENT; }
+"#yoloswag" { return token(TOKEN_BEGIN_PROGRAM); }
+"#420" { return token(TOKEN_END_PROGRAM); }
+"plz" { return token(TOKEN_END_OF_STATEMENT); }
 
-"prnt" { return TOKEN_PRINT; }
-"inpt" { return TOKEN_INPUT; }
-"str" { return TOKEN_STRING_TYPE; }
-"#" { return TOKEN_NUMBER_TYPE; }
+"prnt" { return token(TOKEN_PRINT); }
+"inpt" { return token(TOKEN_INPUT); }
+"str" { return token(TOKEN_STRING_TYPE); }
+"#" { return token(TOKEN_NUMBER_TYPE); }
 
-"(" { return TOKEN_LEFT_PARAN; }
-")" { return TOKEN_RIGHT_PARAN; }
-"+" { return TOKEN_PLUS; }
-"-" { return TOKEN_MINUS; }
-"*" { return TOKEN_MULTIPLY; }
-"/" { return TOKEN_DIVIDE; }
-"=" { return TOKEN_ASSIGNMENT; }
+"(" { return token(TOKEN_LEFT_PARAN); }
+")" { return token(TOKEN_RIGHT_PARAN); }
+"+" { return token(TOKEN_PLUS); }
+"-" { return token(TOKEN_MINUS); }
+"*" { return token(TOKEN_MULTIPLY); }
+"/" { return token(TOKEN_DIVIDE); }
+"=" { return token(TOKEN_ASSIGNMENT); }
 
-. { print_error("Unknown token: \'", yytext, "\'"); }
+"\<3.*" { std::cout << "hit comment\n"; /* ignore comment */ }
+
+. { std::cerr << "[ERROR]: Unknown token: \'" << yytext << "\'" << '\n'; }
 
 %%
-
-// TODO: use logger
-template <typename T, typename... Args>
-void impl_continue_to_print_error(const T& obj, Args&&... args)
-{
-    std::cerr << obj;
-    impl_continue_to_print_error(args...);
-}
-
-template <typename T>
-void impl_continue_to_print_error(const T& obj)
-{
-    std::cerr << obj << '\n';
-}
-
-template <typename T, typename... Args>
-void print_error(const T& obj, Args&&... args)
-{
-    std::cerr << "[ERROR]: " << obj;
-    impl_continue_to_print_error(Args...);
-}
-
-int yyerror(const char* message)
-{
-    print_error(message);
-}

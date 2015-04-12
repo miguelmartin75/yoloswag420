@@ -4,20 +4,21 @@
 #include <string>
 
 #include "Node.hpp"
+#include "Types.hpp"
 
 namespace ast
 {
     /// \note Due to this design, this makes it possible for 
     ///       any type of variable to have any possible value.
-    struct IdentifierNode : Node
+    struct IdentifierNode : public BaseNode
     {
         IdentifierNode(const std::string& name) : id(name) { }
 
-        std::string id;
+        String id;
 
         virtual Value eval(Interpreter& interpreter) override;
-        virtual Type type() const override { return Node::Type::IDENTIFIER; }
-    }
+        virtual Type type() const override { return Type::IDENTIFIER; }
+    };
 }
 
 #endif // IDENTIFIERNODE_HPP

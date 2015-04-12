@@ -3,7 +3,7 @@
 
 #include <boost/variant.hpp>
 
-#include "../Types.hpp"
+#include "Types.hpp"
 
 namespace ast
 {

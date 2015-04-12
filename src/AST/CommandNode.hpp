@@ -5,7 +5,7 @@
 
 namespace ast
 {
-    struct CommandNode : Node
+    struct CommandNode : BaseNode
     {
         enum class Command
         {
@@ -15,15 +15,12 @@ namespace ast
         command;
 
         // TODO: support multiple arguments?
-        NodePtr argument;
+        BaseNodePtr argument;
         
-        CommandNode(Command command, NodePtr argument) :
-            command(command), argument(argument)
-        {
-        }
+        CommandNode(Command command, BaseNodePtr argument);
 
         virtual Value eval(Interpreter&) override;
-        virtual Type type() const { return Node::Type::COMMAND; }
+        virtual Type type() const { return Type::COMMAND; }
     };
 }
 

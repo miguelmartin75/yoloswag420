@@ -1,0 +1,3 @@
+[submodule "extlibs/StringUtils"]
+	path = extlibs/StringUtils
+	url = https://github.com/miguelmartin75/StringUtils.git

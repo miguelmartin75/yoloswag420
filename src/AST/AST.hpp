@@ -6,5 +6,7 @@
 #include "UnaryOperatorNode.hpp"
 #include "BinaryOperatorNode.hpp"
 #include "CommandNode.hpp"
+#include "VariableDeclNode.hpp"
+#include "ConstantValueNode.hpp"
 
 #endif // AST_HPP

@@ -1,13 +1,16 @@
-#include "AssignmentNode.hpp"
+#include "UnaryOperatorNode.hpp"
 
 #include "../Interpreter.hpp"
 
 namespace ast
 {
-    Value AssignmentNode::eval(Interpreter& interpreter)
+    Value UnaryOperatorNode::eval(Interpreter& interpreter)
     {
+        /*
         Value& var = interpreter.getVariable(assignee);
         var = rhs.eval();
-        return var;
+        */
+        // TODO
+        return expression->eval(interpreter);
     }
 }

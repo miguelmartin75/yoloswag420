@@ -5,13 +5,13 @@
 
 namespace ast
 {
-    struct BinaryOperator : Node
+    struct BinaryOperatorNode : public BaseNode
     {
-        enum Operator
+        enum class Operator
         {
             ASSIGNMENT,
 
-            // comparisions
+            // comparisons
             EQUALITY,
             NON_EQUALITY,
             LESS_THAN,
@@ -32,12 +32,12 @@ namespace ast
         // the operator to use
         op;
 
-        NodePtr left;
-        NodePtr right;
+        BaseNodePtr left;
+        BaseNodePtr right;
 
-        BinaryOperator(Operator op, NodePtr left, NodePtr right);
+        BinaryOperatorNode(Operator op, BaseNodePtr left, BaseNodePtr right);
         virtual Value eval(Interpreter&) override;
-        virtual Type type() const override { return Node::Type::BINARY_OP; }
+        virtual Type type() const override { return Type::BINARY_OP; }
     };
 }
 

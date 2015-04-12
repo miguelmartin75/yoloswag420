@@ -4,16 +4,16 @@
 
 namespace ast
 {
-    BinaryOperator::BinaryOperator(Operator op, NodePtr left, NodePtr right) :
+    BinaryOperatorNode::BinaryOperatorNode(Operator op, BaseNodePtr left, BaseNodePtr right) :
         op{op}, left{std::move(left)}, right{std::move(right)}
     {
     }
 
-    Value BinaryOperator::eval(Interpreter& interpreter)
+    Value BinaryOperatorNode::eval(Interpreter& interpreter)
     {
-        auto l = left.eval(interpreter);
-        auto r = right.eval(interpreter);
-
+        auto l = left->eval(interpreter);
+        auto r = right->eval(interpreter);
+        /*
         switch(op)
         {
             case PLUS:
@@ -52,5 +52,7 @@ namespace ast
             default:
                 break;
         }
+        */
+        return Void{};
     }
 }

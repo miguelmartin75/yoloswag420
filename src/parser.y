@@ -1,33 +1,54 @@
 %{
-#include <iostream>
-#include <string>
 
-#include "AST/AST.hpp"
+#include <cstdio>
 
-#include "ErrorCodes.hpp"
-#include "Interpreter.hpp"
+extern FILE *yyin;
+extern FILE *yyout;
+extern int yylex(void);
+extern int yylineno;
 
-extern "C" {
-	FILE *yyin;
-	FILE *yyout;
-	int yyparse(void);
-}
+#include "AST/StatementList.hpp"
+int yyerror(ast::StatementList& ast, const char* message);
 
-StatementList parse(const std::string& filepath);
+extern int yywrap(void);
 
 %}
-
-%parse-param {Interpreter& interpreter} {StatementList& statements}
 
 /***************
  * Preferences *
  ***************/
+
+%code requires {
+    #include "AST/AST.hpp"
+
+    #include "AST/AST.hpp"
+    #include "AST/StatementList.hpp"
+    #include "AST/Types.hpp"
+}
+
 %defines "parser.hpp"
-%output "parser.cpp"
+%output="parser.cpp"
+
+%parse-param {ast::StatementList& statements}
 
 %union {
-    double numberValue;
-    char* stringValue;
+    ast::BaseNode* node; 
+    //ast::NodePtr<ast::BinaryOperatorNode> binaryOp;
+    //ast::NodePtr<ast::UnaryOperatorNode> unaryOperator;
+    //ast::NodePtr<ast::CommandNode> command;
+    //ast::NodePtr<ast::IdentifierNode> identifier;
+    //ast::NodePtr<ast::ConstantValueNode> constant;
+    //ast::NodePtr<ast::VariableDeclNode> varDecl;
+
+    double number;
+    char* string;
+
+    // to store the actual token
+    // e.g. for an operator we will store the token
+    // thus when converting we will just:
+    // if token == TOKEN_PLUS
+    // etc. etc.
+    int token;
 }
 
 /********************
@@ -36,33 +57,41 @@ StatementList parse(const std::string& filepath);
 
 %token TOKEN_BEGIN_PROGRAM;
 %token TOKEN_END_PROGRAM;
-
-/* Variable Types */
-%token TOKEN_STRING_TYPE
-%token TOKEN_NUMBER_TYPE
-
-/* Identifiers/constant expressions */
-%token TOKEN_IDENTIFIER
-%token <stringValue> TOKEN_STRING_LITERAL
-%token <numberValue> TOKEN_NUMBER_CONSTANT
 %token TOKEN_END_OF_STATEMENT
 
 /* Commands */
 %token TOKEN_PRINT
 %token TOKEN_INPUT
 
+/* Variable Types */
+%token TOKEN_STRING_TYPE
+%token TOKEN_NUMBER_TYPE
+
+/* Identifiers/constant expressions */
+%token <string> TOKEN_STRING_LITERAL
+%token <number> TOKEN_NUMBER_CONSTANT
+
 /* Operators */
-%token TOKEN_LEFT_PARAN
-%token TOKEN_RIGHT_PARAN
-%token TOKEN_ASSIGNMENT 
-%token TOKEN_MULTIPLY
-%token TOKEN_DIVIDE
-%token TOKEN_PLUS
-%token TOKEN_MINUS
+%token <token> TOKEN_LEFT_PARAN
+%token <token> TOKEN_RIGHT_PARAN
+
+%token <token> TOKEN_ASSIGNMENT 
+%token <token> TOKEN_MULTIPLY
+%token <token> TOKEN_DIVIDE
+%token <token> TOKEN_PLUS
+%token <token> TOKEN_MINUS
+
+%token <string> TOKEN_IDENTIFIER
+
+%type <node> expression value constant
+%type <node> statement
+
+/*%type <token> binary_op*/
 
 /* Operator precedence for mathematical operators */
 %left TOKEN_PLUS TOKEN_MINUS
 %left TOKEN_MULTIPLY TOKEN_DIVIDE
+/*%right TOKEN_ASSIGNMENT;*/
 
 %start program
 
@@ -70,55 +99,48 @@ StatementList parse(const std::string& filepath);
 
 program : TOKEN_BEGIN_PROGRAM statements TOKEN_END_PROGRAM;
 
-statements : statement TOKEN_END_OF_STATEMENT | TOKEN_END_OF_STATEMENT;
-statement : variable_declaration | command | expression;
+statements : statement TOKEN_END_OF_STATEMENT { statements.emplace_back(ast::node($1)); } |
+             TOKEN_END_OF_STATEMENT
+statement : /*variable_declaration | command |*/ expression;
 
-var : TOKEN_IDENTIFIER;
-constant : TOKEN_STRING_LITERAL | TOKEN_NUMBER_LITERAL;
-value : var | constant;
+/* TODO: Throw errors */
+/*
+variable_declaration : TOKEN_STRING_TYPE identifier { $$ = ast::node<>(); } |
+                       TOKEN_NUMBER_TYPE identifier { };
+*/
+/*identifier : TOKEN_IDENTIFIER { $$ = ast::node<ast::IdentifierNode>($1); }*/
 
-variable_declaration : TOKEN_IDENTIFIER { statements.emplace_back(new VariableNode(Value($2)));} |
-                       TOKEN_NUMBER_VAR TOKEN_IDENTIFIER { statemnets.emplace_back(new VariableNode(Value(util::from_string($2)))); };
+/* expression */
+expression : /*expression binary_op expression { } |*/
+             value
+             /*|
+             command;
+             */
 
-command : TOKEN_PRINT expression { } | 
-          TOKEN_INPUT var { statements.emplace_back(new PrintCommandNode($2)); };
 
-expression : var TOKEN_ASSIGNMENT expression { } |
-             expression TOKEN_PLUS expression { } |
-             expression TOKEN_MINUS expression { } |
-             expression TOKEN_MULTIPLY value { } |
-             value TOKEN_DIVIDE value { };
+value : /*var | */constant;
+/*var : identifier;*/
+constant: TOKEN_NUMBER_CONSTANT { std::cout << "hit constant node\n"; $$ = new ast::ConstantValueNode{$1}; } | 
+          TOKEN_STRING_LITERAL  { $$ = new ast::ConstantValueNode{$1}; } ;
+
+/*binary_op : TOKEN_ASSIGNMENT | TOKEN_PLUS | TOKEN_MINUS | TOKEN_DIVIDE | TOKEN_MULTIPLY;*/
+
+/*
+command : TOKEN_PRINT expression { $$ = ast::node<ast::CommandNode>(); } | 
+          TOKEN_INPUT var { $$ = ast::node<ast::CommandNode>(ast::CommandNode::Command::INPUT, ast::node<IdentifierNode>($2)); };
+          */
+
 %%
 
-StatementList parse(const std::string& filepath, int* errorCode = nullptr)
+/*
+expression : unary_op expression { } |
+expression:
+             expression binary_op expression { } |
+unary_op : TOKEN_ASSIGNMENT | TOKEN_PLUS | TOKEN_MINUS;
+*/
+
+int yyerror(ast::StatementList& ast, const char* message)
 {
-	// Open the file we wish to interpet
-	FILE* file = fopen(filepath.c_str(), "r"); // have to use FILE for bison/flex
-	
-    // if we failed to open the file
-    if(!file)
-	{
-		std::cerr << "[ERROR]: Failed to open file: \"" << filepath << "\"\n";
-		std::cerr << "Perhaps there is no persmission or file does not exist?\n";
-
-		if(errorCode)
-        {
-            return errorCode;
-        }
-	}
-
-	
-	// set flex to read from the file instead of stdin
-	yyin = file;
-
-    StatementList statements;
-
-	// parse through the file
-	while(!feof(yyin))
-	{
-		// get yacc (bison in this case) to parse the file
-		yyparse(statements);
-	}
-
-    return statements;
+    std::cerr << "[ERROR]: " << message << "(" << yylineno << ")\n";
+    return 0;
 }

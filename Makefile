@@ -1,9 +1,11 @@
-CXX=
-CXX_ARGS=-std=c++11 -g
+CXX=c++
+CXX_ARGS=-std=c++1y -g -I/usr/local/include -I./extlibs/StringUtils/include -Wno-deprecated-register
 SRC_DIR=src
+SOURCES=$(shell find "${SRC_DIR}" -name "*.cpp")
 
 all: flex bison
-	$(CXX) $(CXX_ARGS) $(SRC_DIR)/*.cpp -o ys420i
+	@echo $(CXX) $(CXX_ARGS) ${SOURCES} -o ys420i
+	@$(CXX) $(CXX_ARGS) ${SOURCES} -o ys420i
 bison:
 	@(cd $(SRC_DIR) && bison parser.y)
 flex:

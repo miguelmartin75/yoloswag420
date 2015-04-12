@@ -5,7 +5,7 @@
 
 namespace ast
 {
-    struct UnaryNode : Node
+    struct UnaryOperatorNode : public BaseNode
     {
         enum class Operator
         {
@@ -16,17 +16,17 @@ namespace ast
             NEGATIVE
         } op;
 
-        NodePtr node;
+        BaseNodePtr expression;
 
-        UnaryNode(Operator op, NodePtr node) : 
+        UnaryOperatorNode(Operator op, BaseNodePtr expression) : 
             op(op), 
-            node(std::move(node))
+            expression(std::move(expression))
         { 
         }
 
         virtual Value eval(Interpreter& interpreter) override;
-        virtual Type type() const override { return Node::Type::UNARY_OP; }
-    }
+        virtual Type type() const override { return Type::UNARY_OP; }
+    };
 }
 
 
