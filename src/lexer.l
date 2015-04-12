@@ -8,6 +8,7 @@
 
 int yyerror(ast::StatementList&, const char* message);
 inline int token(int token) { yylval.token = token; return token; }
+std::string stringBuffer;
 
 %}
 
@@ -21,21 +22,28 @@ DIGIT [0-9]+
 UPPERCASE_ALPHA [A-Z]+
 LOWERCASE_ALPHA [a-z]+
 ALPHA [A-Za-z]+
-STRING_LITERAL \"(\\.|[^"])*\"
+STRING_LITERAL \"(\\.|[^\\"])*\"
 WHITESPACE [ \t\r\n]*
-
 
 /********************
  * Token Evaluation *
  ********************/
+%x str
 %%
 
-{WHITESPACE} { /* ignore whitespace */ }
-{STRING_LITERAL} { std::cout << "hit string literal\n"; yylval.string = yytext; return TOKEN_STRING_LITERAL; }
-{DIGIT}+\.{DIGIT} { yylval.number = util::from_string<Number>(String{yytext}); return TOKEN_NUMBER_CONSTANT; }
-{DIGIT}+ { yylval.number = util::from_string<Number>(String{yytext}); return TOKEN_NUMBER_CONSTANT; }
-{ALPHA}*{DIGIT} { return token(TOKEN_IDENTIFIER); }
+\" { BEGIN str; stringBuffer.clear(); }
+<str>[^\\\"\n]* { stringBuffer += yytext; }
+<str>\\n { stringBuffer += '\n'; }
+<str>\\r { stringBuffer += '\r'; }
+<str>\\a { stringBuffer += '\a'; }
+<str>\\b { stringBuffer += '\b'; }
+<str>\\t { stringBuffer += '\t'; }
+<str>\\[\\"] { stringBuffer += yytext[1]; }
+<str>\" { yylval.string = &(*stringBuffer.begin()); BEGIN 0; return TOKEN_STRING_LITERAL; }
+<str>\\. { std::cerr << "error in string literal. TODO give more meaning to this message.\n"; }
 
+
+{WHITESPACE} { /* ignore whitespace */ }
 "#yoloswag" { return token(TOKEN_BEGIN_PROGRAM); }
 "#420" { return token(TOKEN_END_PROGRAM); }
 "plz" { return token(TOKEN_END_OF_STATEMENT); }
@@ -54,6 +62,10 @@ WHITESPACE [ \t\r\n]*
 "=" { return token(TOKEN_ASSIGNMENT); }
 
 "\<3.*" { std::cout << "hit comment\n"; /* ignore comment */ }
+
+{DIGIT}+\.{DIGIT} { yylval.number = util::from_string<Number>(String{yytext}); return TOKEN_NUMBER_CONSTANT; }
+{DIGIT}+ { yylval.number = util::from_string<Number>(String{yytext}); return TOKEN_NUMBER_CONSTANT; }
+[A-Za-z]+[0-9]* { return token(TOKEN_IDENTIFIER); }
 
 . { std::cerr << "[ERROR]: Unknown token: \'" << yytext << "\'" << '\n'; }
 

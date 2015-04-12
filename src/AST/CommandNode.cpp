@@ -44,5 +44,6 @@ namespace ast
                 }
                 break;
         }
+        return Void{};
     }
 }

@@ -16,10 +16,13 @@ namespace ast
     {
         VariableType varType; 
         IdentifierNode id;
+        BaseNodePtr assignment;
 
-        VariableDeclNode(VariableType varType, IdentifierNode id) : varType(varType), id(id) { };
+        VariableDeclNode(VariableType varType, String id) : varType(varType), id(id) { }
 
-        virtual Value eval(Interpreter& inter) override { return id.eval(inter); }
+        VariableDeclNode(VariableType varType, String id, BaseNodePtr assignment) : varType(varType), id(id), assignment(std::move(assignment)) { }
+
+        virtual Value eval(Interpreter& inter) override;
     };
 }
 

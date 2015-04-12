@@ -33,13 +33,7 @@ extern int yywrap(void);
 
 %union {
     ast::BaseNode* node; 
-    ast::CommandNode* commandNode;
-    //ast::NodePtr<ast::BinaryOperatorNode> binaryOp;
-    //ast::NodePtr<ast::UnaryOperatorNode> unaryOperator;
-    //ast::NodePtr<ast::CommandNode> command;
-    //ast::NodePtr<ast::IdentifierNode> identifier;
-    //ast::NodePtr<ast::ConstantValueNode> constant;
-    //ast::NodePtr<ast::VariableDeclNode> varDecl;
+    ast::IdentifierNode* idNode;
 
     double number;
     char* string;
@@ -84,9 +78,13 @@ extern int yywrap(void);
 
 %token <string> TOKEN_IDENTIFIER
 
-%type <node> expression value constant
-%type <commandNode> command
+%type <node> expression 
+%type <node> value 
+%type <node> constant
+%type <node> command
 %type <node> statement
+%type <node> variable_declaration
+%type <idNode> identifier
 
 /*%type <token> binary_op*/
 
@@ -101,34 +99,32 @@ extern int yywrap(void);
 
 program : TOKEN_BEGIN_PROGRAM statements TOKEN_END_PROGRAM;
 
-statements : statement TOKEN_END_OF_STATEMENT { statements.emplace_back(ast::node($1)); } |
-             TOKEN_END_OF_STATEMENT
-statement : /*variable_declaration | command |*/ expression;
+statements : statement { statements.emplace_back(ast::node($1)); } |
+             statements statement { statements.emplace_back(ast::node($2)); }
+
+statement : variable_declaration | expression TOKEN_END_OF_STATEMENT;
 
 /* TODO: Throw errors */
-/*
-variable_declaration : TOKEN_STRING_TYPE identifier { $$ = ast::node<>(); } |
-                       TOKEN_NUMBER_TYPE identifier { };
-*/
-/*identifier : TOKEN_IDENTIFIER { $$ = ast::node<ast::IdentifierNode>($1); }*/
+
+variable_declaration : TOKEN_STRING_TYPE identifier { $$ = new ast::VariableDeclNode(ast::VariableType::STRING, $2->id); } |
+                       TOKEN_NUMBER_TYPE identifier { $$ = new ast::VariableDeclNode(ast::VariableType::NUMBER, $2->id); };
+
+identifier : TOKEN_IDENTIFIER { $$ = new ast::IdentifierNode($1); }
 
 /* expression */
 expression : /*expression binary_op expression { } |*/
-             value
-             |
+             value | 
              command;
 
 
-value : /*var | */constant;
-/*var : identifier;*/
+value : identifier { $$ = (ast::BaseNode*)$1; } | constant;
 constant: TOKEN_NUMBER_CONSTANT { std::cout << "hit constant node\n"; $$ = new ast::ConstantValueNode{$1}; } | 
           TOKEN_STRING_LITERAL  { $$ = new ast::ConstantValueNode{$1}; } ;
 
 /*binary_op : TOKEN_ASSIGNMENT | TOKEN_PLUS | TOKEN_MINUS | TOKEN_DIVIDE | TOKEN_MULTIPLY;*/
 
-command : TOKEN_PRINT expression { $$ = new ast::CommandNode(ast::Command::PRINT, ast::node($2)); }; /*| 
-          TOKEN_INPUT var { $$ = ast::node<ast::CommandNode>(ast::CommandNode::Command::INPUT, ast::node<IdentifierNode>($2)); };
-          */
+command : TOKEN_PRINT expression { $$ = new ast::CommandNode(ast::Command::PRINT, ast::node($2)); }; | 
+          TOKEN_INPUT identifier { $$ = new ast::CommandNode(ast::Command::INPUT, ast::node($2)); };
 
 %%
 
@@ -141,6 +137,6 @@ unary_op : TOKEN_ASSIGNMENT | TOKEN_PLUS | TOKEN_MINUS;
 
 int yyerror(ast::StatementList& ast, const char* message)
 {
-    std::cerr << "[ERROR]: " << message << "(" << yylineno << ")\n";
+    std::cerr << "[ERROR]: " << message << " (line: " << yylineno << ")\n";
     return 0;
 }
