@@ -7,12 +7,17 @@ namespace ast
 {
     namespace detail
     {
-        struct Printer : boost::static_visitor<void>
+        struct Printer : public boost::static_visitor<void>
         {
             template <class T>
-            void operator()(const T& obj)
+            void operator()(const T& obj) const
             {
                 std::cout << obj;
+            }
+            
+            void operator()(const Void& obj) const
+            {
+                std::cout << "null";
             }
         };
     }
@@ -21,7 +26,7 @@ namespace ast
     {
     }
 
-    Value CommandNode::eval(Interpreter&)
+    Value CommandNode::eval(Interpreter& interpreter)
     {
         switch(command)
         {
@@ -34,7 +39,8 @@ namespace ast
                 break;
             case Command::PRINT:
                 {
-                    boost::apply_visitor(detail::Printer{}, argument); 
+                    auto valueOfArg = argument->eval(interpreter);
+                    boost::apply_visitor(detail::Printer(), valueOfArg);
                 }
                 break;
         }
