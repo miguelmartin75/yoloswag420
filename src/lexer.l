@@ -21,7 +21,7 @@ DIGIT [0-9]+
 UPPERCASE_ALPHA [A-Z]+
 LOWERCASE_ALPHA [a-z]+
 ALPHA [A-Za-z]+
-STRING_LITERAL "\".*\""
+STRING_LITERAL \"(\\.|[^"])*\"
 WHITESPACE [ \t\r\n]*
 
 
@@ -31,7 +31,7 @@ WHITESPACE [ \t\r\n]*
 %%
 
 {WHITESPACE} { /* ignore whitespace */ }
-{STRING_LITERAL} { yylval.string = yytext; return TOKEN_STRING_LITERAL; }
+{STRING_LITERAL} { std::cout << "hit string literal\n"; yylval.string = yytext; return TOKEN_STRING_LITERAL; }
 {DIGIT}+\.{DIGIT} { yylval.number = util::from_string<Number>(String{yytext}); return TOKEN_NUMBER_CONSTANT; }
 {DIGIT}+ { yylval.number = util::from_string<Number>(String{yytext}); return TOKEN_NUMBER_CONSTANT; }
 {ALPHA}*{DIGIT} { return token(TOKEN_IDENTIFIER); }

@@ -21,7 +21,7 @@ namespace ast
             }
         };
     }
-    CommandNode::CommandNode(CommandNode::Command command, ast::BaseNodePtr argument) :
+    CommandNode::CommandNode(Command command, BaseNodePtr argument) :
         command(command), argument(std::move(argument))
     {
     }

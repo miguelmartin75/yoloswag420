@@ -5,14 +5,15 @@
 
 namespace ast
 {
+    enum class Command
+    {
+        PRINT,
+        INPUT
+    };
+
     struct CommandNode : BaseNode
     {
-        enum class Command
-        {
-            PRINT,
-            INPUT
-        } 
-        command;
+        Command command;
 
         // TODO: support multiple arguments?
         BaseNodePtr argument;

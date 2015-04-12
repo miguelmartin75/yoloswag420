@@ -33,6 +33,7 @@ extern int yywrap(void);
 
 %union {
     ast::BaseNode* node; 
+    ast::CommandNode* commandNode;
     //ast::NodePtr<ast::BinaryOperatorNode> binaryOp;
     //ast::NodePtr<ast::UnaryOperatorNode> unaryOperator;
     //ast::NodePtr<ast::CommandNode> command;
@@ -84,6 +85,7 @@ extern int yywrap(void);
 %token <string> TOKEN_IDENTIFIER
 
 %type <node> expression value constant
+%type <commandNode> command
 %type <node> statement
 
 /*%type <token> binary_op*/
@@ -113,9 +115,8 @@ variable_declaration : TOKEN_STRING_TYPE identifier { $$ = ast::node<>(); } |
 /* expression */
 expression : /*expression binary_op expression { } |*/
              value
-             /*|
+             |
              command;
-             */
 
 
 value : /*var | */constant;
@@ -125,8 +126,7 @@ constant: TOKEN_NUMBER_CONSTANT { std::cout << "hit constant node\n"; $$ = new a
 
 /*binary_op : TOKEN_ASSIGNMENT | TOKEN_PLUS | TOKEN_MINUS | TOKEN_DIVIDE | TOKEN_MULTIPLY;*/
 
-/*
-command : TOKEN_PRINT expression { $$ = ast::node<ast::CommandNode>(); } | 
+command : TOKEN_PRINT expression { $$ = new ast::CommandNode(ast::Command::PRINT, ast::node($2)); }; /*| 
           TOKEN_INPUT var { $$ = ast::node<ast::CommandNode>(ast::CommandNode::Command::INPUT, ast::node<IdentifierNode>($2)); };
           */
 
