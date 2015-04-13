@@ -9,6 +9,8 @@
 
 ast::StatementList parse(const std::string& filepath, int* errorCode);
 
+//#define TOKENS
+
 // prints the usage of the
 void printUsage(char* programName);
 
@@ -32,7 +34,6 @@ int main(int argc, char* argv[])
 		return errorCode;
 	}
 	
-    std::cout << "interpreting... " << statements.size() << " statements\n";
 	Interpreter interpreter; // create an interpreter
 	errorCode = interpreter.interpret(statements); // interpret the statements
 	return errorCode;
@@ -69,13 +70,18 @@ ast::StatementList parse(const std::string& filepath, int* errorCode = nullptr)
 	yyin = file;
 
 
+
+#ifndef TOKENS
 	// parse through the file
 	while(!feof(yyin))
 	{
-        std::cout << "parsing...\n";
 		// get yacc (bison in this case) to parse the file
 		yyparse(statements);
 	}
-
+#else
+    int token;
+    while ((token = yylex()) != 0)
+        printf("Token: %d (%s)\n", token, yytext);
+#endif
     return statements;
 }

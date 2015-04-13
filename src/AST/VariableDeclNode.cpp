@@ -15,11 +15,22 @@ namespace ast
 
         if(assignment)
         {
-            inter.variables().emplace(actualId, assignment->eval(inter));
+            auto value = assignment->eval(inter);
+            inter.variables().emplace(actualId, value);
         }
         else
         {
-            inter.variables().emplace(actualId, varType == VariableType::STRING ? "" : 0);
+            switch(varType)
+            {
+                case VariableType::STRING:
+                    inter.variables().emplace(actualId, String{});
+                    break;
+                case VariableType::NUMBER:
+                    inter.variables().emplace(actualId, Number{});
+                    break;
+                default:
+                    break;
+            }
         }
 
         return id.eval(inter);

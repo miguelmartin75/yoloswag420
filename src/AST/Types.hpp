@@ -4,7 +4,7 @@
 #include <string>
 
 struct Void { };
-using Number = int;
+using Number = double;
 using String = std::string;
 
 #endif // TYPES_HPP

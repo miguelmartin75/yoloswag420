@@ -50,8 +50,13 @@ WHITESPACE [ \t\r\n]*
 
 "prnt" { return token(TOKEN_PRINT); }
 "inpt" { return token(TOKEN_INPUT); }
-"str" { return token(TOKEN_STRING_TYPE); }
+"txt" { return token(TOKEN_STRING_TYPE); }
 "#" { return token(TOKEN_NUMBER_TYPE); }
+
+{DIGIT}+\.{DIGIT} { yylval.number = util::from_string<Number>(String{yytext}); return token(TOKEN_NUMBER_CONSTANT); }
+{DIGIT}+ { yylval.number = util::from_string<Number>(String{yytext}); return token(TOKEN_NUMBER_CONSTANT); }
+
+[a-zA-Z_][a-zA-Z0-9_]* { yylval.string = yytext; return TOKEN_IDENTIFIER; }
 
 "(" { return token(TOKEN_LEFT_PARAN); }
 ")" { return token(TOKEN_RIGHT_PARAN); }
@@ -60,12 +65,6 @@ WHITESPACE [ \t\r\n]*
 "*" { return token(TOKEN_MULTIPLY); }
 "/" { return token(TOKEN_DIVIDE); }
 "=" { return token(TOKEN_ASSIGNMENT); }
-
-"\<3.*" { std::cout << "hit comment\n"; /* ignore comment */ }
-
-{DIGIT}+\.{DIGIT} { yylval.number = util::from_string<Number>(String{yytext}); return TOKEN_NUMBER_CONSTANT; }
-{DIGIT}+ { yylval.number = util::from_string<Number>(String{yytext}); return TOKEN_NUMBER_CONSTANT; }
-[A-Za-z]+[0-9]* { return token(TOKEN_IDENTIFIER); }
 
 . { std::cerr << "[ERROR]: Unknown token: \'" << yytext << "\'" << '\n'; }
 

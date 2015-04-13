@@ -6,7 +6,6 @@ namespace ast
 {
     Value IdentifierNode::eval(Interpreter& interpreter)
     {
-        // just return the value at this id
-        return Void{};
+        return interpreter.variables().count(id) == 0 ? (std::cerr << "no such variable: " << id << '\n', Void{}): interpreter.variables().at(id);
     }
 }
