@@ -1,7 +1,7 @@
 %{
 
 #include <iostream>
-#include <util/string_utils.hpp> // mainly for to_string
+#include <boost/lexical_cast/try_lexical_convert.hpp>
 #include "parser.hpp" // The parser; generated from yacc (bison)
 
 #include "AST/Types.hpp"
@@ -53,8 +53,14 @@ WHITESPACE [ \t\r\n]*
 "txt" { return token(TOKEN_STRING_TYPE); }
 "#" { return token(TOKEN_NUMBER_TYPE); }
 
-{DIGIT}+\.{DIGIT} { yylval.number = util::from_string<Number>(String{yytext}); return token(TOKEN_NUMBER_CONSTANT); }
-{DIGIT}+ { yylval.number = util::from_string<Number>(String{yytext}); return token(TOKEN_NUMBER_CONSTANT); }
+{DIGIT}+\.{DIGIT} { 
+    boost::conversion::try_lexical_convert(yytext, yylval.number);
+    return token(TOKEN_NUMBER_CONSTANT); 
+}
+{DIGIT}+ { 
+    boost::conversion::try_lexical_convert(yytext, yylval.number);
+    return token(TOKEN_NUMBER_CONSTANT); 
+}
 
 [a-zA-Z_][a-zA-Z0-9_]* { yylval.string = yytext; return TOKEN_IDENTIFIER; }
 
