@@ -12,9 +12,10 @@ namespace ast
     ///       any type of variable to have any possible value.
     struct IdentifierNode : public BaseNode
     {
-        IdentifierNode(const std::string& name) : id(name) { }
+        using Id = String;
+        IdentifierNode(Id id) : id(std::move(id)) { }
 
-        String id;
+        Id id;
 
         virtual Value eval(Interpreter& interpreter) override;
         virtual Type type() const override { return Type::IDENTIFIER; }

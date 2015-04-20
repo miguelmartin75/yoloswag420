@@ -11,23 +11,26 @@ namespace ast
         {
             ASSIGNMENT,
 
-            // comparisons
-            EQUALITY,
-            NON_EQUALITY,
-            LESS_THAN,
-            GREATER_THAN,
-            LESS_THAN_OR_EQUALS,
-            GREATER_THAN_OR_EQUALS,
-
             // arithmetic
             PLUS,
             MINUS,
             MULT,
             DIV,
 
-            // logical
+            // comparisons/logical operators
+            /*
+             TODO: need boolean variables
+            EQUALITY,
+            NON_EQUALITY,
+            LESS_THAN,
+            GREATER_THAN,
+            LESS_THAN_OR_EQUALS,
+            GREATER_THAN_OR_EQUALS,
             LOGICAL_OR,
             LOGIAL_AND,
+            */
+
+            UNDEF
         } 
         // the operator to use
         op;

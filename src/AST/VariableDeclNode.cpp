@@ -2,37 +2,42 @@
 
 #include "../Interpreter.hpp"
 
+#include "detail/AssignmentVisitor.hpp"
+
 namespace ast
 {
     Value VariableDeclNode::eval(Interpreter& inter)
     {
-        auto actualId = id.id;
-        if(inter.variables().count(actualId) > 0)
+        if(inter.variables().find(id) != inter.variables().end())
         {
             std::cerr << "variable already declared!\n";
             return Void{};
         }
 
+        Value* value;
+        switch(varType)
+        {
+            case VariableType::STRING:
+                value = &(inter.variables()[id] = String{});
+                break;
+            case VariableType::NUMBER:
+                value = &(inter.variables()[id] = Number{});
+                break;
+            default:
+                break;
+        }
+
         if(assignment)
         {
-            auto value = assignment->eval(inter);
-            inter.variables().emplace(actualId, value);
-        }
-        else
-        {
-            switch(varType)
+            auto valueToAttemptToAssign = assignment->eval(inter);
+
+            if(!boost::apply_visitor(detail::AssignmentEvaluator{}, *value, valueToAttemptToAssign))
             {
-                case VariableType::STRING:
-                    inter.variables().emplace(actualId, String{});
-                    break;
-                case VariableType::NUMBER:
-                    inter.variables().emplace(actualId, Number{});
-                    break;
-                default:
-                    break;
+                std::cerr << "could not assign initializer to " << id << (varType == VariableType::STRING ? "string" : "number") << '\n';
+                return Void{};
             }
         }
 
-        return id.eval(inter);
+        return *value;
     }
 }

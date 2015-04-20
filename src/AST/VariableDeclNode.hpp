@@ -3,24 +3,19 @@
 
 #include "Node.hpp"
 #include "IdentifierNode.hpp"
+#include "VariableType.hpp"
 
 namespace ast
 {
-    enum class VariableType
-    {
-        NUMBER,
-        STRING
-    };
-
     struct VariableDeclNode : public BaseNode
     {
         VariableType varType; 
-        IdentifierNode id;
+        IdentifierNode::Id id;
         BaseNodePtr assignment;
 
-        VariableDeclNode(VariableType varType, String id) : varType(varType), id(id) { }
+        VariableDeclNode(VariableType varType, IdentifierNode::Id id) : varType(varType), id(std::move(id)) { }
 
-        VariableDeclNode(VariableType varType, String id, BaseNodePtr assignment) : varType(varType), id(id), assignment(std::move(assignment)) { }
+        VariableDeclNode(VariableType varType, IdentifierNode::Id id, BaseNodePtr assignment) : varType(varType), id(std::move(id)), assignment(std::move(assignment)) { }
 
         virtual Value eval(Interpreter& inter) override;
     };

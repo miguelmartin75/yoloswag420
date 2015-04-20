@@ -1,16 +1,20 @@
 %{
 
 #include <cstdio>
+#include <iostream>
+
+#include "AST/StatementList.hpp"
+#include "AST/BinaryOperatorNode.hpp"
 
 extern FILE *yyin;
 extern FILE *yyout;
 extern int yylex(void);
 extern int yylineno;
 
-#include "AST/StatementList.hpp"
 int yyerror(ast::StatementList& ast, const char* message);
-
 extern int yywrap(void);
+
+ast::BinaryOperatorNode::Operator toBinaryOp(int token);
 
 %}
 
@@ -79,18 +83,19 @@ extern int yywrap(void);
 %token <string> TOKEN_IDENTIFIER
 
 %type <node> expression 
-%type <node> value 
 %type <node> constant
+%type <node> value
 %type <node> command
 %type <node> statement
 %type <node> variable_declaration
 %type <node> identifier
 
-/*%type <token> binary_op*/
+%type <token> binary_op
 
 /* Operator precedence for mathematical operators */
 %left TOKEN_PLUS TOKEN_MINUS
 %left TOKEN_MULTIPLY TOKEN_DIVIDE
+
 /*%right TOKEN_ASSIGNMENT;*/
 
 %start program
@@ -112,22 +117,33 @@ variable_declaration : TOKEN_STRING_TYPE identifier { $$ = new ast::VariableDecl
                        TOKEN_STRING_TYPE identifier TOKEN_ASSIGNMENT expression { $$ = new ast::VariableDeclNode(ast::VariableType::STRING, static_cast<ast::IdentifierNode*>($2)->id, ast::node($4)); } |
                        TOKEN_NUMBER_TYPE identifier TOKEN_ASSIGNMENT expression { $$ = new ast::VariableDeclNode(ast::VariableType::NUMBER, static_cast<ast::IdentifierNode*>($2)->id, ast::node($4)); };
 
-identifier : TOKEN_IDENTIFIER { auto temp = $$ = new ast::IdentifierNode($1); }
+identifier : TOKEN_IDENTIFIER { $$ = new ast::IdentifierNode($1); }
 
 /* expression */
-expression : /*expression binary_op expression { } |*/
-             value | 
-             command;
+expression : identifier | 
+             constant | 
+             command |
+             value binary_op value
+             { 
+               auto op = toBinaryOp($2);
+               using OperatorType = decltype(op);
+               if(op == OperatorType::UNDEF)
+               {
+                    std::cerr << "unknown operator\n";
+                    exit(-1);
+               }
+               $$ = new ast::BinaryOperatorNode(op, ast::node($1), ast::node($3)); 
+             };
 
+value: constant | identifier;
 
-value : identifier | constant;
 constant: TOKEN_NUMBER_CONSTANT { $$ = new ast::ConstantValueNode{$1}; } | 
           TOKEN_STRING_LITERAL  { $$ = new ast::ConstantValueNode{$1}; } ;
 
-/*binary_op : TOKEN_ASSIGNMENT | TOKEN_PLUS | TOKEN_MINUS | TOKEN_DIVIDE | TOKEN_MULTIPLY;*/
+binary_op : TOKEN_PLUS;
 
 command : TOKEN_PRINT expression { $$ = new ast::CommandNode(ast::Command::PRINT, ast::node($2)); }; | 
-          TOKEN_INPUT identifier { $$ = new ast::CommandNode(ast::Command::INPUT, ast::node($2)); };
+          TOKEN_INPUT { $$ = new ast::CommandNode(ast::Command::INPUT, nullptr); };
 
 %%
 
@@ -137,6 +153,25 @@ expression:
              expression binary_op expression { } |
 unary_op : TOKEN_ASSIGNMENT | TOKEN_PLUS | TOKEN_MINUS;
 */
+
+ast::BinaryOperatorNode::Operator toBinaryOp(int token)
+{
+    switch(token)
+    {
+        case TOKEN_ASSIGNMENT:
+            return ast::BinaryOperatorNode::Operator::ASSIGNMENT;
+        case TOKEN_MULTIPLY:
+            return ast::BinaryOperatorNode::Operator::MULT;
+        case TOKEN_DIVIDE:
+            return ast::BinaryOperatorNode::Operator::DIV;
+        case TOKEN_PLUS:
+            return ast::BinaryOperatorNode::Operator::PLUS;
+        case TOKEN_MINUS:
+            return ast::BinaryOperatorNode::Operator::MINUS;
+        default:
+            return ast::BinaryOperatorNode::Operator::UNDEF;
+    }
+}
 
 int yyerror(ast::StatementList& ast, const char* message)
 {
