@@ -1,4 +1,4 @@
-#include "interpreter.hpp"
+#include "Interpreter.hpp"
 
 Interpreter::Interpreter(std::ostream& logStream)
     : m_logger{logStream}
