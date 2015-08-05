@@ -1,5 +1,5 @@
 CXX=c++
-CXX_ARGS=-std=c++1y -g -I/usr/local/include -I./extlibs/StringUtils/include -Wno-deprecated-register
+CXX_ARGS=-std=c++1y -g -I/usr/local/include -Wno-deprecated-register
 SRC_DIR=src
 SOURCES=$(shell find "${SRC_DIR}" -name "*.cpp")
 
