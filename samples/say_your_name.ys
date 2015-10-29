@@ -6,7 +6,7 @@
     <3 Get the user's name
     txt name = inpt plz
 
-    <3 Say goodbye to the user; using his name
+    <3 Say goodbye to the user; using his or her name
     prnt "Goodbye, " + name + " I have to go :(!" plz 
 
 #420
